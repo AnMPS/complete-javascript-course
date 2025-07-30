@@ -176,3 +176,125 @@ rest1.numGuests ??= 10;
 //replace if it exists
 rest1.owner &&= 'meme'; //leaves undefined
 rest2.owner &&= 'meme'; //assigns to meme
+
+//nullables and optional eval.
+if (restaurant.openingHours && restaurant.openingHours.mon) {
+}
+
+console.log(restaurant.openingHours?.mon?.open);
+
+//If something does not exist returns undefined
+
+//For methods
+
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
+
+//objects
+
+const users = [];
+console.log(users[0]?.name ?? 'User array empty');
+
+//iterate over objects
+//properties
+const properties = Object.keys(openingHours);
+let openStr = `we are open on ${properties.length} days: `;
+
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+console.log(openStr);
+
+//entire object
+const entries = Object.entries(openingHours);
+//{key, value of object}
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+//property VALUES
+
+const values = Object.values(openingHours);
+console.log(values);
+
+//SETS: unique values with no duplicates
+//result won't have duplicates
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pasta',
+]);
+console.log(ordersSet.size);
+console.log(ordersSet.has('Pizza'));
+console.log(ordersSet.has('Bread'));
+ordersSet.add('Garlic Bread');
+ordersSet.delete('Risotto');
+//ordersSet.clear()
+
+//SETS CAN'T BE ACCESSED WITH INDEX [0] USE HAS
+
+//Example
+const staff = ['Waiter', 'Chef', 'Manager', 'Waiter', 'Chef', 'Waiter'];
+
+const staffUnique = [...new Set(staff)];
+
+//NEW SET METHODS
+
+//Find elements in both sets
+const commonFoods = italianFoods.intersection(mexicanFoods);
+
+console.log(commonFoods);
+
+//Combine sets without duplicating entries
+
+const italianMexicanFusion = italianFoods.union(mexicanFoods);
+//new Set([...italianFoods, ...mexicanFoods]); does the same
+
+//Elements unique to a set
+const uniqueItalianFoods = italianFoods.difference(mexicanFoods);
+
+const rest = new Map();
+
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+rest.set(2, 'Lisbon, Portugal');
+//Can be chained, returns new map each time
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'we are open')
+  .set(false, 'we are closed');
+
+console.log(rest.get(true));
+console.log(rest.get('name'));
+
+const time = 21;
+
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+rest.has('categories');
+rest.size;
+// rest.clear;
+
+//iteration
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JS'],
+  ['correct', 3],
+  [true, 'Correct'],
+  [(false, 'Try again')],
+]);
+
+//Convert object to map
+const hoursMap = new Map(Object.entries(openingHours));
+
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  if (typeof key === 'number') {
+    console.log(`Answer ${key}: ${value}`);
+  }
+}

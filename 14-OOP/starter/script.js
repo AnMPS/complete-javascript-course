@@ -111,3 +111,58 @@ Student.prototype.greet = function () {
 
 const mike = new Student('mike', 1991, 'CS');
 mike.greet();
+
+//using classes
+class StudentCL extends Person {
+  constructor(fullName, birthYear, course) {
+    super(fullName, birthYear); //constructs parent class, creates this keyword
+    this.course = course;
+  }
+  greet() {
+    console.log(`My name is ${this.fullName}, I study ${this.course}`);
+  }
+}
+const martha = new StudentCL('Martha Jones', 2012, 'CS');
+
+//using object create
+
+const steven = Object.create(PersonProto);
+const StudentProto = Object.create(PersonProto);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+const jay = Object.create(StudentProto);
+
+class Account {
+  locale = navigator.locale;
+  bank = 'Bankist';
+  #movements = []; //private
+  #pin; //private
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin; //private set
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+  deposit(val) {
+    this.#movements.push(val);
+  }
+  withdraw(val) {
+    this.#movements.push(-val);
+  }
+
+  #approvedLoan(val) {
+    return true;
+  }
+  requestLoan(val) {
+    if (this.#approvedLoan(val)) {
+      this.deposit(val);
+    }
+  }
+  static test() {
+    return true;
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);

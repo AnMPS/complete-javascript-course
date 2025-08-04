@@ -19,7 +19,7 @@ const renderCountry = function (data, className = '') {
             <h4 class="country__region">${data.region}</h4>
             <p class="country__row"><span>👫</span>${(
               +data.population / 1000000
-            ).toFixed(1)}</p>
+            ).toFixed(1)} m</p>
             <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
             <p class="country__row"><span>💰</span>${
               data.currencies[0].name
@@ -318,10 +318,58 @@ const get3Countries = async function (c1, c2, c3) {
 
 get3Countries('portugal', 'canada', 'usa');
 
-//promise.race([promises]) returns the first promise that settles.
-// await Promise.race([wait(5),wait(2),wait(3)]) returns result of wait(2)
+//promise.race([promises]) returns the first promise that settles.// await Promise.race([wait(5),wait(2),wait(3)]) returns result of wait(2)
 // it also returns a promise if it rejects. useful for timeouts.
 
 //Promise.allSettled, returns all promises even if they rejected.
 
 //Promise.any returns first fulfilled promise, ignores rejected promises.
+
+// Coding Challenge #3
+
+/* 
+1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and current speed, the EV also has the current battery charge in % ('charge' property);
+2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
+3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
+4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 😉
+
+DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+*/
+
+// const createImage = function (imgPath, i) {
+//   return new Promise((resolve, reject) => {
+//     if (!imgPath) reject('No path');
+//     const img = document.createElement('img');
+//     img.src = imgPath;
+//     img.id = 'img-${i}';
+//     img.addEventListener('load', function () {
+//       imgDiv.append(img);
+//       console.log('image loaded');
+//       resolve(img);
+//     });
+//     img.addEventListener('error', e => reject(new Error('Img not found')));
+//   });
+// };
+
+const loadImgAsync = async function (imgPath, i = 1) {
+  const img = document.createElement('img');
+  img.src = imgPath;
+  img.id = `img-${i}`;
+  img.addEventListener('load', function () {
+    imgDiv.append(img);
+  });
+  return img;
+};
+
+const loadNPause = async function (url, url2) {
+  const img = await loadImgAsync(url);
+  await wait(2);
+  document.getElementById('img-1').style.display = 'none';
+  const img2 = await loadImgAsync(url, 2);
+  await wait(2);
+  document.getElementById('img-2').style.display = 'none';
+};
+
+loadNPause('./img/img-1.jpg', './img/img-2.jpg');
